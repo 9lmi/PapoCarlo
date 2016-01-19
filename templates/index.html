@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html;charset=UTF-8">
+    <title>Catalog</title>
+    <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header"><h1>{{category.name}}</h1></div>
+        <div class="body">
+            <div class="left"></div>
+            <div class="main">
+                {% for tovar in tovars %}
+                <a class="item" href="/item/{{tovar.alias}}/">
+                    <img src="{{tovar.image}}" alt="">
+                    <span class="title">{{tovar.name}}</span>
+                    <span class="price">{{tovar.price}} руб</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

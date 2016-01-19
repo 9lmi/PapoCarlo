@@ -1,0 +1,88 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html;charset=UTF-8">
+    <title>Order-page</title>
+    <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="{% static "jquery.cookie.js" %}"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header"><h1>Ваша корзина</h1></div>
+        <div class="korzina">
+
+        </div>
+        </div>
+    <div class="total">Сумма вашей покупки: <span class="summa">0</span> руб. </div>
+    <br><br><br><br>
+
+        <form id="form" method="POST" action="">
+            {% csrf_token %}
+            Ваше имя:       <input name="name" placeholder="Иванов Ваня"><br><br>
+            Ваш телефон:    <input name="phone" placeholder="89521332263"><br><br>
+            Сумма покупки:  <input name="hhh2" id="hhh1"><br><br>
+            Ваш заказ:      <input name="hh3" id="hhh3"><br><br>
+                            <input type="submit">
+        </form>
+
+
+
+<script type="text/javascript">
+
+    $(function(){
+        var www = document.getElementById('hhh1');
+
+        var arr1 = $.cookie('cart');
+
+        if(!arr1){
+            arr1 = '[]';
+        }
+        var json2 = $.parseJSON(arr1);
+        var summa1 = 0;
+        var Z = "";
+        $.each(json2, function( index, value ){
+            Z=Z+value["name"]+",";
+            $('.korzina').append('<div class="row"><div class="id" style="display:none">'+index+'</div><img src="'+value["img"]+'"><div class="name">'+value["name"]+'</div><div class="price">'+value["price"]+'</div><div class="delete">X</div></div>');
+            summa1 = summa1 + parseInt(value['price']);
+        });
+        $('.total .summa').text(summa1);
+        www.value = summa1;
+
+
+
+
+        $("#form input#hhh3").val(Z);
+
+
+
+
+
+        $('.delete').on('click', function(){
+            var parent = $(this).parent();
+            var obj = parseInt($(this).closest('.row').find('.id').text());
+            var arr = $.cookie('cart');
+            if(!arr){
+                arr = '[]';
+            }
+                var json = $.parseJSON(arr);
+                var summa = parseInt($('.total .summa').text());
+                $.each(json, function( index, value ){
+                    if(index==obj){
+                        summa = summa - parseInt(value['price']);
+                        json.splice(index, 1);
+                    }
+                });
+                $.cookie('cart', JSON.stringify(json), {path: '/'});
+                $('.total .summa').text(summa);
+                parent.remove();
+                $.each($('.id'), function( index, value ){
+                    $(this).text(index);
+                });
+            www.value = summa;
+        })
+    });
+</script>
+</body>
+</html>
