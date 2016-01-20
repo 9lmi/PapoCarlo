@@ -5,8 +5,11 @@
     <meta http-equiv=Content-Type content="text/html;charset=UTF-8">
     <title>Catalog</title>
     <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="{% static "jquery.cookie.js" %}"></script>
 </head>
 <body>
+<a href="#" onclick="history.back();">Назад</a>
     <div class="wrapper">
         <div class="header"><h1>{{category.name}}</h1></div>
         <div class="body">
@@ -22,6 +25,44 @@
             </div>
         </div>
     </div>
+<div class="cart">В корзине товаров на <span class="summa">0</span>
+        <a class="oformit" href="/order/">Оформить заказ</a>
+    </div>
+<script type="text/javascript">
+
+    $(function(){
+        var arr1 = $.cookie('cart');
+        if(!arr1){
+            arr1 = '[]';
+        }
+        var json2 = $.parseJSON(arr1);
+        var summa1 = 0;
+        $.each(json2, function( index, value ){
+            summa1 = summa1 + parseInt(value['price']);
+        });
+        $('.cart .summa').text(summa1);
+
+        $(".buy").click(function(){
+            var arr = $.cookie('cart');
+            if(!arr){
+                arr = '[]';
+            }
+            var json = $.parseJSON(arr);
+            json.push({
+                'name':$('h1').text(),
+                'price':$('span.value').text(),
+                'img':$('img.full').attr('src'),
+            });
+            $.cookie('cart', JSON.stringify(json), { path : '/' });
+            var summa = 0;
+            $.each(json, function( index, value ) {
+                summa = summa + parseInt(value['price']);
+            });
+            $('.cart .summa').text(summa);
+        })
+
+    })
+</script>
 
 </body>
 </html>

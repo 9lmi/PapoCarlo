@@ -9,9 +9,13 @@
     <script src="{% static "jquery.cookie.js" %}"></script>
 </head>
 <body>
+<a href="#" onclick="history.back();">Назад</a>
     <div class="wrapper">
-        <div class="header"><h1>{{tovar.name}}</h1></div>
+        <div class="header"><h1>{{tovar.name}}</h1><br>
+
+        </div>
         <div class="body">
+
             <div class="item">
                 <img class="full" src="{{tovar.image}}" alt="">
                 <span class="price"><span class="value">{{tovar.price}}</span> Р</span>

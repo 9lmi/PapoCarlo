@@ -35,7 +35,7 @@ class Zakaz(models.Model):
     phone = models.CharField(max_length=255, verbose_name='Телефон заказчика')
     zakaz1 = models.CharField(max_length=255, verbose_name='Что заказал')
     summa = models.IntegerField(default=0, verbose_name='Сумма заказа')
-    list_deal = models.DateTimeField(default=datetime.now(), verbose_name='Дата заказа')
+    list_deal = models.DateTimeField(default=datetime.now, verbose_name='Дата заказа')
 
     class Meta:
         verbose_name = "Заказ"

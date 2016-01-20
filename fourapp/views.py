@@ -8,7 +8,6 @@ from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render_to_response
 from fourapp.form import ContactForm
 from django.core.mail import send_mail
-from django.core.context_processors import csrf
 from django.template.context_processors import csrf
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
@@ -38,7 +37,7 @@ def order(request):
         try:
             zakaz = Zakaz(name=request.POST['name'], phone=request.POST['phone'], summa=request.POST['hhh2'], zakaz1=request.POST['hh3'],)
             zakaz.save()
-            return HttpResponseRedirect("/")
+            return HttpResponse("Заказ успешно оформлен")
         except:
             return HttpResponse("Что-то пошло не так. Проверьте введённые данные.")
     else:
